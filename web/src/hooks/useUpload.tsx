@@ -1,12 +1,15 @@
-import LoadingSpinner from "../../../components/common/LoadingSpinner";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 import { IconChecks, IconMovie, IconPolaroid } from "@tabler/icons";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { trpc } from "../../../utils/trpc";
+import { trpc } from "../utils/trpc";
 
 export type MediaAsset = "video" | "image";
 
-export const useUpload = (type: MediaAsset) => {
+export const useUpload = (
+  type: MediaAsset,
+  updateAssets: (type: MediaAsset, key: string) => void
+) => {
   const { mutateAsync: createPresignedUrl } =
     trpc.posts.createPresignedUrl.useMutation();
 
@@ -24,7 +27,10 @@ export const useUpload = (type: MediaAsset) => {
       return;
     }
     setUploading(true);
-    const { fields, url } = await createPresignedUrl({ filename: file.name });
+    const {
+      url: { fields, url },
+      key,
+    } = await createPresignedUrl({ filename: file.name });
 
     const formData = new FormData();
     Object.entries({ ...fields, file }).forEach(([key, value]) => {
@@ -37,6 +43,7 @@ export const useUpload = (type: MediaAsset) => {
       });
       setUploading(false);
       setUploaded(true);
+      updateAssets(type, key);
       toast.success("Successfully upload the file");
     } catch {
       toast.error("Failed to upload the asset");

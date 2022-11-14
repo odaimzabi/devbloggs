@@ -6,6 +6,7 @@ type Props = {
   type?: string;
   className?: string;
   placeholder?: string;
+  defaultValue?: string;
 };
 
 const initialClassName =

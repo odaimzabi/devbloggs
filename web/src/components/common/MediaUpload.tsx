@@ -1,13 +1,16 @@
 import React from "react";
-import { MediaAsset, useUpload } from "./hooks/useUpload";
+import { MediaAsset, useUpload } from "../../hooks/useUpload";
 
 type Props = {
   type: MediaAsset;
+  updateAssets: (type: MediaAsset, key: string) => void;
 };
 
-function MediaUpload({ type }: Props) {
-  const { handleUpload, handleUploadState, handleUploadedState } =
-    useUpload(type);
+function MediaUpload({ type, updateAssets }: Props) {
+  const { handleUpload, handleUploadState, handleUploadedState } = useUpload(
+    type,
+    updateAssets
+  );
   return (
     <div className="mt-2 flex w-full flex-col gap-2">
       <label className="mb-1 mt-1 text-base font-medium text-gray-700">

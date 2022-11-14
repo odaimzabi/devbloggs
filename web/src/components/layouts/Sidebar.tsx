@@ -31,11 +31,10 @@ const sidebarLinks = [
     text: "Statistics",
   },
 ];
-
 const UserSkeleton = () => (
-  <div className="flex animate-pulse items-center">
+  <div className="mr-auto flex animate-pulse items-center">
     <svg
-      className="h-14 w-14 text-gray-200 dark:text-gray-500"
+      className="h-12 w-12 text-gray-200 dark:text-gray-500"
       aria-hidden="true"
       fill="currentColor"
       viewBox="0 0 20 20"
@@ -50,7 +49,6 @@ const UserSkeleton = () => (
     <div className="h-2 w-40 rounded-full bg-gray-200 "></div>
   </div>
 );
-
 function SideBar() {
   const { pathname } = useRouter();
   const { data: sessionData } = useSession();
@@ -90,7 +88,9 @@ function SideBar() {
             </span>
           </>
         ) : (
-          <UserSkeleton />
+          <>
+            <UserSkeleton />
+          </>
         )}
       </div>
 

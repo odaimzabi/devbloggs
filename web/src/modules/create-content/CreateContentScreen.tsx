@@ -4,13 +4,14 @@ import Button from "../../components/common/Button";
 import Container from "../../components/common/Container";
 import Input from "../../components/common/Input";
 import Layout from "../../components/layouts/Layout";
-import MediaUpload from "./MediaUpload";
-import SelectInput from "./SelectInput";
+import MediaUpload from "../../components/common/MediaUpload";
+import SelectInput from "../../components/common/SelectInput";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "../../utils/trpc";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { MediaAsset } from "../../hooks/useUpload";
 
 const schema = z.object({
   title: z
@@ -31,7 +32,7 @@ const schema = z.object({
   video: z.string().optional(),
 });
 
-export type CreatePostForm = z.infer<typeof schema>;
+export type CreatePostDTO = z.infer<typeof schema>;
 
 function CreateContentScreen() {
   const createPost = trpc.posts.createPost.useMutation();
@@ -40,21 +41,30 @@ function CreateContentScreen() {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
-  } = useForm<CreatePostForm>({
+  } = useForm<CreatePostDTO>({
     resolver: zodResolver(schema),
     defaultValues: {
       image: "",
       video: "",
     },
   });
-  const onSubmit = (data: CreatePostForm) => {
+
+  const updateAssets = (type: MediaAsset, key: string) => {
+    if (type == "image") {
+      setValue("image", key);
+    } else {
+      setValue("video", key);
+    }
+  };
+  const onSubmit = (data: CreatePostDTO) => {
     createPost.mutate(
       { ...data },
       {
         onSuccess: (data) => {
           toast.success("Successfully created the post!");
-          // router.push(`/dashboard/edit/${data.id}`);
+          router.push(`/dashboard/edit/${data.id}`);
         },
         onError: (error) => {
           toast.error(`${error.message}`);
@@ -150,8 +160,8 @@ function CreateContentScreen() {
             />
           </div>
           <div className=" m-0 flex w-full flex-col items-center gap-4 md:ml-10 md:w-1/2 lg:ml-10 lg:w-1/2">
-            <MediaUpload type="image" />
-            <MediaUpload type="video" />
+            <MediaUpload type="image" updateAssets={updateAssets} />
+            <MediaUpload type="video" updateAssets={updateAssets} />
           </div>
           <Button
             type="submit"

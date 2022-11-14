@@ -47,8 +47,10 @@ model Post{
   id          String @id @default(cuid())
   title       String 
   subtitle    String 
-  description String 
+  description String
   github_repo String?
+  image       String?
+  video       String?
   author      User @relation(fields:[authorId],references: [id],onDelete:Cascade)
   authorId    String
 }
