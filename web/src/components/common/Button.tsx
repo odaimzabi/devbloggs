@@ -57,7 +57,7 @@ function Button({
       )}
     >
       {isLoading ? <LoadingSpinner /> : null}
-      {text}
+      {isLoading ? "Loading..." : text}
     </button>
   );
 }

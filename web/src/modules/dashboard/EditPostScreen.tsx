@@ -22,7 +22,7 @@ function EditPostScreen() {
 
   const onSubmit = (data: EditPostDTO) => {
     editPost.mutate(
-      { ...data },
+      { id: post!.id, ...data },
       {
         onSuccess: (data) => {
           toast.success("Successfully updated the post!");

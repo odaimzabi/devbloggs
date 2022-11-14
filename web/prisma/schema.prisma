@@ -49,6 +49,7 @@ model Post{
   subtitle    String 
   description String
   github_repo String?
+  price       PostPrice @default(Free)
   image       String?
   video       String?
   author      User @relation(fields:[authorId],references: [id],onDelete:Cascade)
@@ -67,6 +68,11 @@ model User {
   posts         Post[]
 }
 
+enum PostPrice{
+  Paid
+  Free
+}
+
 model VerificationToken {
   identifier String
   token      String   @unique
@@ -74,3 +80,5 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+

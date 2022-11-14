@@ -53,27 +53,36 @@ export const postsRouter = router({
     }),
   editPost: protectedProcedure
     .input(
-      z
-        .object({
-          title: z.string({ required_error: "Title is required" }),
-          subtitle: z.string({ required_error: "Subtitle is required" }),
-          description: z.string({ required_error: "Description is required" }),
-          github_repo: z.string().optional(),
-          image: z.string().optional(),
-          video: z.string().optional(),
-        })
-        .nullish()
+      z.object({
+        id: z.string({ required_error: "ID is required" }).cuid(),
+        title: z.string({ required_error: "Title is required" }),
+        subtitle: z.string({ required_error: "Subtitle is required" }),
+        description: z.string({ required_error: "Description is required" }),
+        github_repo: z.string().optional(),
+        image: z.string().optional(),
+        video: z.string().optional(),
+      })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.update({
+      const post = ctx.prisma.post.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!post) {
+        return new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+      const updatedPost = await ctx.prisma.post.update({
         data: {
           ...input,
         },
         where: {
-          id: ctx.session.user.id,
+          id: input!.id,
         },
       });
-      return post;
+      return updatedPost;
     }),
   getPost: protectedProcedure
     .input(z.object({ id: z.string().cuid() }))

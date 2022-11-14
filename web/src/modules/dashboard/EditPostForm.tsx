@@ -46,8 +46,8 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
   } = useForm<EditPostDTO>({
     resolver: zodResolver(schema),
     defaultValues: {
-      image: "",
-      video: "",
+      image: post!.image as string,
+      video: post!.video as string,
     },
   });
 
@@ -142,8 +142,16 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
           />
         </div>
         <div className=" m-0 flex w-full flex-col items-center gap-4 md:ml-10 md:w-1/2 lg:ml-10 lg:w-1/2">
-          <MediaUpload type="image" updateAssets={updateAssets} />
-          <MediaUpload type="video" updateAssets={updateAssets} />
+          <MediaUpload
+            type="image"
+            updateAssets={updateAssets}
+            isUploaded={!!post?.image}
+          />
+          <MediaUpload
+            type="video"
+            updateAssets={updateAssets}
+            isUploaded={!!post?.video}
+          />
         </div>
         <Button
           type="submit"

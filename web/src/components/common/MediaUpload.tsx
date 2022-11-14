@@ -4,12 +4,14 @@ import { MediaAsset, useUpload } from "../../hooks/useUpload";
 type Props = {
   type: MediaAsset;
   updateAssets: (type: MediaAsset, key: string) => void;
+  isUploaded?: boolean;
 };
 
-function MediaUpload({ type, updateAssets }: Props) {
+function MediaUpload({ type, updateAssets, isUploaded }: Props) {
   const { handleUpload, handleUploadState, handleUploadedState } = useUpload(
     type,
-    updateAssets
+    updateAssets,
+    isUploaded
   );
   return (
     <div className="mt-2 flex w-full flex-col gap-2">

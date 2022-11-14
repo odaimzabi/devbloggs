@@ -8,13 +8,14 @@ export type MediaAsset = "video" | "image";
 
 export const useUpload = (
   type: MediaAsset,
-  updateAssets: (type: MediaAsset, key: string) => void
+  updateAssets: (type: MediaAsset, key: string) => void,
+  isUploaded: boolean | undefined
 ) => {
   const { mutateAsync: createPresignedUrl } =
     trpc.posts.createPresignedUrl.useMutation();
 
   const [uploading, setUploading] = useState(false);
-  const [uploaded, setUploaded] = useState(false);
+  const [uploaded, setUploaded] = useState(isUploaded || false);
 
   const handleUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,

@@ -2,7 +2,9 @@ import React from "react";
 import Button from "../../components/common/Button";
 import Container from "../../components/common/Container";
 import Layout from "../../components/layouts/Layout";
+import Image from "next/image";
 
+import student from "../../assets/student.jpeg";
 export default function DashboardScreen() {
   return (
     <Layout>
@@ -16,6 +18,25 @@ export default function DashboardScreen() {
             placeholder="Type something.."
           />
           <Button text="Search Posts" type="submit" />
+        </div>
+
+        <div className="mt-2 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md md:max-w-full lg:w-1/4">
+          <a href="#">
+            <Image
+              width={400}
+              height={200}
+              className="rounded-sm"
+              src={student}
+              alt=""
+            />
+          </a>
+          <div className="p-5">
+            <a href="#">
+              <h5 className="mb-2 text-xl font-bold tracking-tight text-black ">
+                Noteworthy technology acquisitions 2021
+              </h5>
+            </a>
+          </div>
         </div>
       </Container>
     </Layout>

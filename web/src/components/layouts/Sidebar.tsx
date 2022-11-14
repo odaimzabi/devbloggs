@@ -64,7 +64,7 @@ function SideBar() {
                 pathname == link
                   ? "bg-indigo-50 text-indigo-600"
                   : "text-gray-500 hover:bg-gray-50",
-                "align-center mt-1 flex cursor-pointer flex-row items-center gap-2 px-4 py-4 text-lg font-medium"
+                "align-center text-md mt-1 flex cursor-pointer flex-row items-center gap-2 px-4 py-4 font-medium"
               )}
             >
               {icon}
@@ -74,7 +74,7 @@ function SideBar() {
         ))}
       </ul>
 
-      <div className="flex cursor-pointer flex-row  items-center gap-2 px-1 py-1 text-lg font-medium text-gray-700">
+      <div className="text-md flex cursor-pointer  flex-row items-center gap-2 px-1 py-1 font-medium text-gray-700">
         {sessionData?.user ? (
           <>
             <Image
@@ -96,7 +96,7 @@ function SideBar() {
 
       <hr />
       <button
-        className="mt-auto mb-2 flex cursor-pointer flex-row  items-center gap-2 px-4 py-4 text-lg font-medium text-gray-500 hover:bg-gray-50"
+        className="text-md mt-auto mb-2 flex cursor-pointer  flex-row items-center gap-2 px-4 py-4 font-medium text-gray-500 hover:bg-gray-50"
         onClick={() => signOut()}
       >
         <IconLogout />
