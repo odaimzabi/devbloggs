@@ -3,15 +3,7 @@
   "parserOptions": {
     "project": ["web/tsconfig.json"]
   },
-  "overrides": [
-    {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
-    }
-  ],
-  "plugins": ["@typescript-eslint", "testing-library"],
+
+  "plugins": ["@typescript-eslint"],
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"]
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "../../utils/classnames";
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
   onClick?: () => void;
   disabled?: boolean;
   isLoading?: boolean;
+  icon?: ReactNode;
 };
 
 const initialClassName =
@@ -34,6 +35,26 @@ const LoadingSpinner = () => (
   </>
 );
 
+function handleButtonState(isLoading: boolean, text: string, icon: ReactNode) {
+  if (isLoading) {
+    return (
+      <>
+        <LoadingSpinner />
+        <span>{text}</span>
+      </>
+    );
+  }
+  if (icon) {
+    return (
+      <div className="flex w-full items-center justify-center gap-2">
+        <span>{icon}</span>
+        <span>{text}</span>
+      </div>
+    );
+  }
+  return text;
+}
+
 function Button({
   isLoading,
   disabled,
@@ -41,6 +62,7 @@ function Button({
   type,
   className,
   onClick,
+  icon,
   ...props
 }: Props) {
   return (
@@ -56,8 +78,7 @@ function Button({
           : (className as string)
       )}
     >
-      {isLoading ? <LoadingSpinner /> : null}
-      {isLoading ? "Loading..." : text}
+      {handleButtonState(isLoading as boolean, text as string, icon)}
     </button>
   );
 }

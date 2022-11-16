@@ -1,15 +1,16 @@
 import React from "react";
 import Button from "../../components/common/Button";
 import Container from "../../components/common/Container";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Layout from "../../components/layouts/Layout";
-import Image from "next/image";
 
-import student from "../../assets/student.jpeg";
+import { trpc } from "../../utils/trpc";
+import PostsContainer from "./PostsContainer";
 export default function DashboardScreen() {
+  const { isLoading, data: posts } = trpc.posts.getPosts.useQuery();
   return (
     <Layout>
-      <Container>
-        <h2 className="text-2xl font-bold">My Dashboard</h2>
+      <Container title="My Dashboard">
         <div className=" align-items mt-4 mb-4 flex flex-col gap-4 -space-y-px md:flex-row xl:flex-row ">
           <input
             name="email"
@@ -19,25 +20,13 @@ export default function DashboardScreen() {
           />
           <Button text="Search Posts" type="submit" />
         </div>
-
-        <div className="mt-2 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md md:max-w-full lg:w-1/4">
-          <a href="#">
-            <Image
-              width={400}
-              height={200}
-              className="rounded-sm"
-              src={student}
-              alt=""
-            />
-          </a>
-          <div className="p-5">
-            <a href="#">
-              <h5 className="mb-2 text-xl font-bold tracking-tight text-black ">
-                Noteworthy technology acquisitions 2021
-              </h5>
-            </a>
+        {isLoading ? (
+          <div className="mt-10 flex animate-spin items-center justify-center">
+            <LoadingSpinner className="h-12 w-14" />
           </div>
-        </div>
+        ) : (
+          <PostsContainer posts={posts} />
+        )}
       </Container>
     </Layout>
   );

@@ -22,9 +22,9 @@ function EditPostScreen() {
 
   const onSubmit = (data: EditPostDTO) => {
     editPost.mutate(
-      { id: post!.id, ...data },
+      { id: post?.id as string, ...data },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast.success("Successfully updated the post!");
           refetch();
         },
@@ -39,7 +39,7 @@ function EditPostScreen() {
     <Layout>
       <Container>
         <h2 className="text-3xl font-bold" data-testid="heading">
-          Create Post
+          Edit Post
         </h2>
         {!isLoading ? (
           <EditPostForm

@@ -25,6 +25,7 @@ const sidebarLinks = [
   {
     icon: <IconSettings />,
     text: "Site Preferences",
+    link: "/site-preferences",
   },
   {
     icon: <IconChartArea />,
@@ -41,9 +42,9 @@ const UserSkeleton = () => (
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
+        fillRule="evenodd"
         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-        clip-rule="evenodd"
+        clipRule="evenodd"
       ></path>
     </svg>
     <div className="h-2 w-40 rounded-full bg-gray-200 "></div>
@@ -61,7 +62,7 @@ function SideBar() {
           <Link href={`${link}`} key={text}>
             <li
               className={classNames(
-                pathname == link
+                pathname.includes(link as string)
                   ? "bg-indigo-50 text-indigo-600"
                   : "text-gray-500 hover:bg-gray-50",
                 "align-center text-md mt-1 flex cursor-pointer flex-row items-center gap-2 px-4 py-4 font-medium"
@@ -82,6 +83,7 @@ function SideBar() {
               width={40}
               height={40}
               className="rounded-full"
+              alt="User Avatar"
             />
             <span className="font-medium text-gray-500">
               {sessionData.user.name}

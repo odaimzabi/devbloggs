@@ -58,7 +58,7 @@ model Post{
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
+  name          String? 
   displayName   String?
   email         String?   @unique
   emailVerified DateTime?
@@ -66,6 +66,17 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  site          Site?  @relation(fields:[siteId],references: [id])
+  siteId        String? @unique
+}
+
+model Site{
+  id   String    @id @default(cuid())
+  user User? 
+  domain String 
+  linkedin String?
+  facebook String?
+  description String?
 }
 
 enum PostPrice{

@@ -46,8 +46,8 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
   } = useForm<EditPostDTO>({
     resolver: zodResolver(schema),
     defaultValues: {
-      image: post!.image as string,
-      video: post!.video as string,
+      image: post?.image as string,
+      video: post?.video as string,
     },
   });
 
@@ -72,7 +72,7 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
           <Controller
             name="title"
             control={control}
-            defaultValue={post!.title}
+            defaultValue={post?.title}
             render={({ field }) => (
               <Input type="text" data-testid="post_title" {...field} />
             )}
@@ -121,7 +121,7 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
           <Controller
             name="github_repo"
             control={control}
-            defaultValue={post!.github_repo ? post!.github_repo : ""}
+            defaultValue={post?.github_repo ? post?.github_repo : ""}
             render={({ field }) => (
               <Input type="text" {...field} data-testid="github_repo" />
             )}

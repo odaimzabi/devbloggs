@@ -75,10 +75,7 @@ function CreateContentScreen() {
 
   return (
     <Layout>
-      <Container>
-        <h2 className="text-3xl font-bold" data-testid="heading">
-          Create Post
-        </h2>
+      <Container title="Create Post">
         <form
           className=" mt-4 flex w-full flex-col gap-10 md:flex-row lg:flex-row"
           onSubmit={handleSubmit(onSubmit)}
