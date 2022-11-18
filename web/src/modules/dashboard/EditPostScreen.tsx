@@ -37,10 +37,7 @@ function EditPostScreen() {
 
   return (
     <Layout>
-      <Container>
-        <h2 className="text-3xl font-bold" data-testid="heading">
-          Edit Post
-        </h2>
+      <Container title="Edit Post">
         {!isLoading ? (
           <EditPostForm
             onSubmit={onSubmit}

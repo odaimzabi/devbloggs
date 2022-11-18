@@ -1,28 +1,33 @@
 import React, { Fragment } from "react";
 import { Disclosure } from "@headlessui/react";
-import { IconDeviceTv, IconHome, IconMenu2, IconX } from "@tabler/icons";
+import { IconMenu2, IconX } from "@tabler/icons";
 import classNames from "../../utils/classnames";
-
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
 const sidebarLinks = [
   {
-    icon: <IconHome />,
     text: "Dashboard",
-    link: "/",
+    link: "/dashboard",
   },
   {
-    icon: <IconDeviceTv />,
-    text: "My Content",
+    text: "Create Content",
+    link: "/create-content",
+  },
+  {
+    text: "Site Preferences",
+    link: "/site-preferences",
+  },
+  {
+    text: "Statistics",
   },
 ];
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-
 function Navbar() {
+  const { pathname } = useRouter();
+  const { data: sessionData } = useSession();
+
   return (
     <Disclosure
       as="nav"
@@ -49,7 +54,7 @@ function Navbar() {
                   )}
                 </Disclosure.Button>
               </div>
-              <h1 className="ml-3 text-2xl  font-medium lg:ml-2">DevBlog</h1>
+              <h1 className="ml-3 text-xl  font-medium lg:ml-2">Devblog</h1>
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center gap-4 md:ml-6">
                   {/* Profile dropdown */}
@@ -57,34 +62,56 @@ function Navbar() {
                   <button className="w-30 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     Logout
                   </button>
-                  <div>
-                    <img
-                      className="h-10 w-10 rounded-full"
-                      src={user.imageUrl}
-                      alt=""
-                    />
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
           </div>
 
           <Disclosure.Panel className="md:hidden">
-            <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+            <div className="flex flex-col space-y-1 px-2 pt-2 pb-3 sm:px-3">
               {sidebarLinks.map((item) => (
-                <Disclosure.Button
-                  key={item.text}
-                  as="a"
-                  href={item.link}
-                  className={classNames(
-                    item.link ? "bg-indigo-600 text-white" : "text-black",
-                    "block rounded-md px-3 py-2 text-base font-medium"
-                  )}
-                  aria-current={item.link ? "page" : undefined}
-                >
-                  {item.text}
-                </Disclosure.Button>
+                <Link href={`${item.link}`} key={item.link}>
+                  <Disclosure.Button
+                    key={item.text}
+                    as="a"
+                    className={classNames(
+                      pathname.includes(item.link as string)
+                        ? "bg-indigo-600 text-white"
+                        : "text-black",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.link ? "page" : undefined}
+                  >
+                    {item.text}
+                  </Disclosure.Button>
+                </Link>
               ))}
+            </div>
+            <hr />
+            <div className="flex flex-col ">
+              <div className="text-md mt-1 flex  cursor-pointer flex-row items-center gap-2 px-2 py-2 font-medium text-gray-700">
+                {sessionData?.user && (
+                  <>
+                    <Image
+                      src={sessionData.user.image as string}
+                      width={40}
+                      height={40}
+                      className="rounded-full"
+                      alt="User Avatar"
+                    />
+                    <span className="font-medium text-gray-500">
+                      {sessionData.user.name}
+                    </span>
+                  </>
+                )}
+              </div>
+              <button
+                className="text-md  ml-1 mb-2 flex cursor-pointer  items-center gap-2 p-2 font-medium text-gray-500 hover:bg-gray-50"
+                onClick={() => signOut()}
+              >
+                <span>Logout</span>
+              </button>
             </div>
           </Disclosure.Panel>
         </>

@@ -73,6 +73,7 @@ model User {
 model Site{
   id   String    @id @default(cuid())
   user User? 
+  price String   @default("10")
   domain String 
   linkedin String?
   facebook String?

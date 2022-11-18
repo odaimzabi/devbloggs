@@ -8,6 +8,21 @@ import { env } from "../../../env/server.mjs";
 
 export const authOptions: NextAuthOptions = {
   // Include user.id on session
+  events: {
+    async createUser({ user }) {
+      await prisma.site.create({
+        data: {
+          domain: user.name?.toLowerCase().split(" ").join("") as string,
+          description: "A cool description for my blog site",
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+    },
+  },
   callbacks: {
     session({ session, user }) {
       if (session.user) {
@@ -15,6 +30,7 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
     redirect({ baseUrl }) {
       return `${baseUrl}/dashboard`;
     },

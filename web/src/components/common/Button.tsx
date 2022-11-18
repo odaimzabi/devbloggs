@@ -38,10 +38,10 @@ const LoadingSpinner = () => (
 function handleButtonState(isLoading: boolean, text: string, icon: ReactNode) {
   if (isLoading) {
     return (
-      <>
+      <div className="flex w-full items-center justify-center gap-2 text-center">
         <LoadingSpinner />
-        <span>{text}</span>
-      </>
+        <span>Loading...</span>
+      </div>
     );
   }
   if (icon) {
