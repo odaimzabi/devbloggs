@@ -5,13 +5,13 @@ import Container from "../../components/common/Container";
 import Input from "../../components/common/Input";
 import Layout from "../../components/layouts/Layout";
 import MediaUpload from "../../components/common/MediaUpload";
-import SelectInput from "../../components/common/SelectInput";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "../../utils/trpc";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { MediaAsset } from "../../hooks/useUpload";
+import SelectInput from "../../components/common/SelectInput";
 
 const schema = z.object({
   title: z
@@ -42,6 +42,7 @@ function CreateContentScreen() {
     handleSubmit,
     control,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<CreatePostDTO>({
     resolver: zodResolver(schema),
@@ -50,7 +51,6 @@ function CreateContentScreen() {
       video: "",
     },
   });
-
   const updateAssets = (type: MediaAsset, key: string) => {
     if (type == "image") {
       setValue("image", key);
@@ -115,7 +115,17 @@ function CreateContentScreen() {
                 {errors.subtitle.message as string}
               </div>
             )}
-            <SelectInput />
+            {/* <Controller
+              name="price"
+              control={control}
+              render={({ field }) => <SelectInput name="price" />}
+            />
+
+            {errors.price && (
+              <div className="text-red-500" data-testid="error">
+                {errors.price.message as string}
+              </div>
+            )} */}
             <label className="text-base font-medium text-gray-700">
               Post Description
             </label>

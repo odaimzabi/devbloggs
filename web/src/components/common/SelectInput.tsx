@@ -7,7 +7,15 @@ const people = [
   { id: 2, name: "Paid", unavailable: false },
 ];
 
-function SelectInput() {
+type Props = {
+  name?: string;
+  type?: string;
+  className?: string;
+  placeholder?: string;
+  defaultValue?: string;
+};
+
+function SelectInput(props: Props) {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
 
   return (
@@ -39,6 +47,7 @@ function SelectInput() {
                   className="absolute mt-1 w-full rounded-md bg-white shadow-lg"
                 >
                   <Listbox.Options
+                    {...props}
                     static
                     className="shadow-xs max-h-60 overflow-auto rounded-md py-1 text-base leading-6 focus:outline-none sm:text-sm sm:leading-5"
                   >

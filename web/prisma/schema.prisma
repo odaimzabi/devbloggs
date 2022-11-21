@@ -74,7 +74,7 @@ model Site{
   id   String    @id @default(cuid())
   user User? 
   price String   @default("10")
-  domain String 
+  domain String  @unique 
   linkedin String?
   facebook String?
   description String?

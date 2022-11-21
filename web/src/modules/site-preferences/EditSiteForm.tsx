@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Site } from "@prisma/client";
 import { IconEye } from "@tabler/icons";
+import { useRouter } from "next/router";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,6 +37,7 @@ const schema = z.object({
 export type SitePreferencesDTO = z.infer<typeof schema>;
 
 function EditSiteForm({ isLoading, onSubmit, site }: Props) {
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -50,6 +52,7 @@ function EditSiteForm({ isLoading, onSubmit, site }: Props) {
         text="Live Preview"
         icon={<IconEye />}
         className="ring:bg-sky-600 mt-2 block w-full bg-sky-600 hover:bg-sky-700"
+        onClick={() => router.push(`/s/${site?.domain}`)}
       />
       <form
         className=" mt-4 flex w-full flex-col gap-10 md:w-1/2 md:flex-row lg:w-1/2 lg:flex-row"

@@ -6,9 +6,10 @@ import { nanoid } from "nanoid";
 
 export const postsRouter = router({
   createPresignedUrl: protectedProcedure
-    .input(z.object({ filename: z.string().optional() }))
+    .input(z.object({ filename: z.string() }))
     .mutation(async ({ input }) => {
-      const key = input.filename + "." + nanoid();
+      const [name, ext] = input.filename.split(".");
+      const key = name + nanoid() + "." + ext;
       const result = await getPresignedUrl(key);
       return { url: result, key };
     }),

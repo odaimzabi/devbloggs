@@ -1,0 +1,108 @@
+import React, { Fragment } from "react";
+import { Disclosure } from "@headlessui/react";
+import { IconCurrencyDollar, IconHome, IconMenu2, IconX } from "@tabler/icons";
+import classNames from "../../utils/classnames";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import NextLink from "next/link";
+import Button from "../../components/common/Button";
+const sidebarLinks = [
+  {
+    text: "Back to dashboard",
+    link: "/dashboard",
+  },
+];
+
+type Props = {
+  user: {
+    image: string | null;
+    name: string | null;
+  } | null;
+};
+
+function SiteNavbar({ user }: Props) {
+  const { pathname } = useRouter();
+
+  return (
+    <Disclosure as="nav" className="border border-b-black bg-white">
+      {({ open }: { open: boolean }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 md:py-5 lg:py-5 lg:px-8">
+            <div className="flex h-16 items-center lg:justify-between">
+              <div className="-mr-2 flex md:hidden">
+                {/* Mobile menu button */}
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md  p-2 text-gray-400  hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <IconX
+                      className="block h-6 w-6 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <IconMenu2
+                      className="block h-6 w-6 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="flex flex-col ">
+                <div className="text-md  ml-3 flex cursor-pointer flex-row  items-center gap-2 px-2 py-2 font-medium text-gray-700 md:m-0 lg:m-0">
+                  {user?.image && (
+                    <>
+                      <Image
+                        src={user.image as string}
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                        alt="User Avatar"
+                      />
+                      <span className="font-medium text-gray-800">
+                        {user.name}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="hidden items-center gap-8  md:flex md:flex-row lg:flex lg:flex-row ">
+                <NextLink href="/dashboard">
+                  <IconHome className="cursor-pointer" />
+                </NextLink>
+                <Button
+                  className="hidden bg-pink-600 hover:bg-pink-700 focus:ring-2 focus:ring-pink-500 md:block lg:block"
+                  icon={<IconCurrencyDollar />}
+                  text="Subscribe"
+                />
+              </div>
+            </div>
+          </div>
+
+          <Disclosure.Panel className="md:hidden">
+            <div className="flex flex-col space-y-1 px-2 pt-2 pb-3 sm:px-3">
+              {sidebarLinks.map((item) => (
+                <NextLink href={`${item.link}`} key={item.link}>
+                  <Disclosure.Button
+                    key={item.text}
+                    as="a"
+                    className={classNames(
+                      pathname.includes(item.link as string)
+                        ? "bg-indigo-600 text-white"
+                        : "text-black",
+                      "block rounded-md px-3 py-2 text-base font-medium"
+                    )}
+                    aria-current={item.link ? "page" : undefined}
+                  >
+                    {item.text}
+                  </Disclosure.Button>
+                </NextLink>
+              ))}
+            </div>
+            <hr />
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
+  );
+}
+
+export default SiteNavbar;

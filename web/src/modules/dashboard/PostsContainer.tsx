@@ -13,7 +13,7 @@ type Props = {
 
 const PostsContainer = ({ posts }: Props) => {
   return (
-    <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-3">
+    <div className="mt-2 grid w-full grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-3">
       {posts?.map((post) => (
         <PostCard title={post.title} id={post.id} key={post.id} />
       ))}

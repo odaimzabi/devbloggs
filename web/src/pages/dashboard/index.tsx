@@ -1,4 +1,4 @@
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import React from "react";
 import DashboardScreen from "../../modules/dashboard/DashboardScreen";

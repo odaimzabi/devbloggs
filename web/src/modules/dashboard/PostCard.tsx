@@ -4,7 +4,7 @@ import student from "../../assets/student.jpeg";
 import Link from "next/link";
 export const PostCard = ({ title, id }: { title: string; id: string }) => {
   return (
-    <div className="mt-2 flex max-w-xs flex-col rounded-lg border border-gray-200 bg-white shadow-md">
+    <div className="transform overflow-hidden rounded-lg shadow-lg transition duration-500 ease-in-out hover:shadow-2xl md:w-80">
       <Link href={`dashboard/edit/${id}`}>
         <Image
           width={400}
@@ -14,19 +14,15 @@ export const PostCard = ({ title, id }: { title: string; id: string }) => {
           alt="Post image"
         />
       </Link>
+      <div className="flex w-full flex-col gap-2 bg-white p-4">
+        <a href="#" className="text-2xl font-medium text-gray-700">
+          {title}
+        </a>
 
-      <div className="p-3">
-        <Link href={`dashboard/edit/${id}`}>
-          <h2 className="mb-2  cursor-pointer text-lg font-bold tracking-tight text-black">
-            {title}
-          </h2>
-        </Link>
+        <span className="mb-2 mt-2 w-12 rounded bg-gray-600 p-1 text-center text-base font-medium text-white">
+          Draft
+        </span>
       </div>
-      <span className="mb-2 ml-2 w-12 rounded bg-gray-600 p-1 text-center text-base font-medium text-white">
-        Draft
-      </span>
-
-      <div className=" mt-2 mb-2  border border-dashed border-t-gray-200" />
     </div>
   );
 };

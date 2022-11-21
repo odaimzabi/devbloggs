@@ -21,7 +21,7 @@ export default function DashboardScreen() {
           <Button text="Search Posts" type="submit" />
         </div>
         {isLoading ? (
-          <div className="mt-10 flex animate-spin items-center justify-center">
+          <div className="mt-20 flex animate-spin items-center justify-center">
             <LoadingSpinner className="h-12 w-14" />
           </div>
         ) : (
