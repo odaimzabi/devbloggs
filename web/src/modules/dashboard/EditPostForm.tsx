@@ -7,12 +7,14 @@ import MediaUpload from "../../components/common/MediaUpload";
 import SelectInput from "../../components/common/SelectInput";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
-import { Post } from "@prisma/client";
+import { Post, PostStatus } from "@prisma/client";
 
 type Props = {
   onSubmit: (data: EditPostDTO) => void;
-  isLoading: boolean;
+  isUpdatingPost: boolean;
+  isPublishingPost: boolean;
   post: Post | null | undefined;
+  handlePublishPost: () => void;
 };
 
 const schema = z.object({
@@ -36,7 +38,13 @@ const schema = z.object({
 
 export type EditPostDTO = z.infer<typeof schema>;
 
-function EditPostForm({ onSubmit, isLoading, post }: Props) {
+function EditPostForm({
+  handlePublishPost,
+  onSubmit,
+  isUpdatingPost,
+  isPublishingPost,
+  post,
+}: Props) {
   const {
     register,
     handleSubmit,
@@ -132,14 +140,29 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
             </div>
           )}
 
-          <Button
-            type="submit"
-            text="Edit Post"
-            className="mt-2 hidden md:block lg:block"
-            data-testid="createPost_btn"
-            disabled={isLoading}
-            isLoading={isLoading}
-          />
+          <div className="mt-2 flex flex-row items-center gap-4">
+            <Button
+              type="submit"
+              text="Edit Post"
+              className="hidden md:block lg:block"
+              data-testid="createPost_btn"
+              disabled={isUpdatingPost}
+              isLoading={isUpdatingPost}
+            />
+            <Button
+              type="button"
+              text={
+                post?.status == PostStatus.Published
+                  ? "Unpublish Post"
+                  : "Publish Post"
+              }
+              className="bg-green-600 hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              data-testid="createPost_btn"
+              disabled={isPublishingPost}
+              isLoading={isPublishingPost}
+              onClick={() => handlePublishPost()}
+            />
+          </div>
         </div>
         <div className=" m-0 flex w-full flex-col items-center gap-4 md:ml-10 md:w-1/2 lg:ml-10 lg:w-1/2">
           <MediaUpload
@@ -153,14 +176,29 @@ function EditPostForm({ onSubmit, isLoading, post }: Props) {
             isUploaded={!!post?.video}
           />
         </div>
-        <Button
-          type="submit"
-          text="Edit Post"
-          className="block md:hidden lg:hidden"
-          data-testid="createPost_btn"
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
+        <div className="flex w-full flex-col gap-4 md:hidden lg:hidden">
+          <Button
+            type="submit"
+            text="Edit Post"
+            className=""
+            data-testid="createPost_btn"
+            disabled={isPublishingPost}
+            isLoading={isPublishingPost}
+          />
+          <Button
+            type="button"
+            text={
+              post?.status == PostStatus.Published
+                ? "Unpublish Post"
+                : "Publish Post"
+            }
+            className="bg-green-600 hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            data-testid="createPost_btn"
+            disabled={isUpdatingPost}
+            isLoading={isUpdatingPost}
+            onClick={() => handlePublishPost()}
+          />
+        </div>
       </form>
     </>
   );

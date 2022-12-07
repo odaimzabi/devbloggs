@@ -49,7 +49,7 @@ model Post{
   subtitle    String 
   description String
   github_repo String?
-  price       PostPrice @default(Free)
+  status      PostStatus @default(Draft)
   image       String?
   video       String?
   author      User @relation(fields:[authorId],references: [id],onDelete:Cascade)
@@ -80,10 +80,12 @@ model Site{
   description String?
 }
 
-enum PostPrice{
-  Paid
-  Free
+enum PostStatus{
+  Draft
+  Published
 }
+
+
 
 model VerificationToken {
   identifier String

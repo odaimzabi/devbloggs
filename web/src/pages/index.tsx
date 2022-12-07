@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import LandingPageScreen from "../modules/landing-page/LandingPageScreen";
 
-const Home: NextPage = () => {
-  return <h1>hello</h1>;
+const LandingPage: NextPage = () => {
+  return <LandingPageScreen />;
 };
 
-export default Home;
+export default LandingPage;

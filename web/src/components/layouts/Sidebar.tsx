@@ -55,7 +55,10 @@ function SideBar() {
   const { data: sessionData } = useSession();
   return (
     <aside className="sticky top-0 left-0 right-0 bottom-0 hidden h-screen w-1/5  flex-col bg-white shadow-md md:flex md:flex-col lg:flex lg:flex-col">
-      <h2 className="mt-2 p-4 text-2xl font-medium">DevBlog</h2>
+      <div className=" flex flex-row items-center gap-2 p-4 ">
+        <Image src={"/logo.svg"} width={40} height={40} alt="Logo" />
+        <h2 className="  text-xl font-medium">DevBlog</h2>
+      </div>
       <hr />
       <ul className="align-center mt-5  w-full flex-1 flex-col gap-2">
         {sidebarLinks.map(({ icon, text, link }) => (

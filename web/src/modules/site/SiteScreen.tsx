@@ -1,27 +1,10 @@
 import React from "react";
 import SiteContainer from "./SiteContainer";
 import SiteNavbar from "./SiteNavbar";
-import { PostPrice } from "@prisma/client";
-import BlogPost from "./BlogPost";
+import BlogPostCard from "./BlogPostCard";
+import { SiteDetails } from "../../types";
 type Props = {
-  site: {
-    user: {
-      image: string | null;
-      name: string | null;
-      posts: {
-        price: PostPrice;
-        image: string | null;
-        subtitle: string;
-        title: string;
-        id: string;
-      }[];
-    } | null;
-    description: string | null;
-    domain: string;
-    facebook: string | null;
-    linkedin: string | null;
-    price: string;
-  };
+  site: SiteDetails;
 };
 
 function SiteScreen({ site }: Props) {
@@ -34,10 +17,11 @@ function SiteScreen({ site }: Props) {
         facebook={site.facebook as string}
         linkedin={site.linkedin as string}
       >
-        <div className="grid grid-cols-1 place-items-center md:grid-cols-3 lg:grid-cols-3">
+        <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-3 lg:grid-cols-3">
           {site?.user?.posts.map((post) => (
-            <BlogPost
+            <BlogPostCard
               key={post.id}
+              id={post.id}
               subtitle={post.subtitle}
               title={post.title}
               image={post.image as string}

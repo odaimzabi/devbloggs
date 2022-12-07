@@ -70,10 +70,9 @@ function Navbar() {
 
           <Disclosure.Panel className="md:hidden">
             <div className="flex flex-col space-y-1 px-2 pt-2 pb-3 sm:px-3">
-              {sidebarLinks.map((item) => (
-                <Link href={`${item.link}`} key={item.link}>
+              {sidebarLinks.map((item, index) => (
+                <Link href={`${item.link}`} key={index}>
                   <Disclosure.Button
-                    key={item.text}
                     as="a"
                     className={classNames(
                       pathname.includes(item.link as string)
@@ -89,7 +88,7 @@ function Navbar() {
               ))}
             </div>
             <hr />
-            <div className="flex flex-col ">
+            <div className="flex flex-col">
               <div className="text-md mt-1 flex  cursor-pointer flex-row items-center gap-2 px-2 py-2 font-medium text-gray-700">
                 {sessionData?.user && (
                   <>

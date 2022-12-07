@@ -21,7 +21,6 @@ const schema = z.object({
   description: z
     .string({ required_error: "Post description is required" })
     .min(10, { message: "Must be 10 or more characters long" }),
-  price: z.string(),
   linkedin: z
     .string()
     .startsWith("https://www.linkedin.com/in/")
@@ -86,24 +85,6 @@ function EditSiteForm({ isLoading, onSubmit, site }: Props) {
           {errors.description && (
             <div className="text-red-500" data-testid="error">
               {errors.description.message as string}
-            </div>
-          )}
-
-          <label className="text-base font-medium text-gray-700">
-            Subscription Price
-          </label>
-
-          <Controller
-            name="price"
-            control={control}
-            defaultValue={site?.price ? site?.price : ""}
-            render={({ field }) => (
-              <Input type="number" {...field} className="w-full" />
-            )}
-          />
-          {errors.price && (
-            <div className="text-red-500" data-testid="error">
-              {errors.price.message as string}
             </div>
           )}
 

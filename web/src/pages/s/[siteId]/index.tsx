@@ -1,27 +1,8 @@
-import { PostPrice } from "@prisma/client";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import React from "react";
 import SiteScreen from "../../../modules/site/SiteScreen";
-
-type SiteData = {
-  user: {
-    image: string | null;
-    name: string | null;
-    posts: {
-      price: PostPrice;
-      image: string | null;
-      subtitle: string;
-      title: string;
-      id: string;
-    }[];
-  } | null;
-  description: string | null;
-  domain: string;
-  facebook: string | null;
-  linkedin: string | null;
-  price: string;
-};
+import { SiteData } from "../../../types";
 
 type Props = {
   site: SiteData;

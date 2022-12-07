@@ -3,6 +3,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { getPresignedUrl } from "../../../libs/aws";
 import { nanoid } from "nanoid";
+import { PostStatus } from "@prisma/client";
 
 export const postsRouter = router({
   createPresignedUrl: protectedProcedure
@@ -62,7 +63,7 @@ export const postsRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = ctx.prisma.post.findFirst({
+      const post = await ctx.prisma.post.findFirst({
         where: {
           id: input.id,
         },
@@ -82,6 +83,34 @@ export const postsRouter = router({
       });
       return updatedPost;
     }),
+  publishPost: protectedProcedure
+    .input(
+      z.object({ id: z.string({ required_error: "ID is required" }).cuid() })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const post = await ctx.prisma.post.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+      if (!post) {
+        return new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+      const publishedPost = await ctx.prisma.post.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          status:
+            post.status == PostStatus.Published
+              ? PostStatus.Draft
+              : PostStatus.Published,
+        },
+      });
+      return publishedPost;
+    }),
   getPost: protectedProcedure
     .input(z.object({ id: z.string().cuid() }))
     .query(async ({ ctx, input }) => {
@@ -97,6 +126,7 @@ export const postsRouter = router({
         id: true,
         image: true,
         title: true,
+        subtitle: true,
       },
       where: {
         authorId: ctx.session.user.id,

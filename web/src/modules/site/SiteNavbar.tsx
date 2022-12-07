@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { Disclosure } from "@headlessui/react";
-import { IconCurrencyDollar, IconHome, IconMenu2, IconX } from "@tabler/icons";
+import { IconHome, IconMenu2, IconX } from "@tabler/icons";
 import classNames from "../../utils/classnames";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
-import Button from "../../components/common/Button";
 const sidebarLinks = [
   {
     text: "Back to dashboard",
@@ -27,7 +26,7 @@ function SiteNavbar({ user }: Props) {
     <Disclosure as="nav" className="border border-b-black bg-white">
       {({ open }: { open: boolean }) => (
         <>
-          <div className="mx-auto max-w-7xl px-5 sm:px-6 md:py-5 lg:py-5 lg:px-8">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 md:py-3 lg:py-3 lg:px-8">
             <div className="flex h-16 items-center lg:justify-between">
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
@@ -68,11 +67,6 @@ function SiteNavbar({ user }: Props) {
                 <NextLink href="/dashboard">
                   <IconHome className="cursor-pointer" />
                 </NextLink>
-                <Button
-                  className="hidden bg-pink-600 hover:bg-pink-700 focus:ring-2 focus:ring-pink-500 md:block lg:block"
-                  icon={<IconCurrencyDollar />}
-                  text="Subscribe"
-                />
               </div>
             </div>
           </div>

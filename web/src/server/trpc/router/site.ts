@@ -49,7 +49,6 @@ export const siteRouter = router({
         description: z
           .string({ required_error: "Post description is required" })
           .min(10, { message: "Must be 10 or more characters long" }),
-        price: z.string(),
         linkedin: z
           .string()
           .startsWith("https://www.linkedin.com/in/")

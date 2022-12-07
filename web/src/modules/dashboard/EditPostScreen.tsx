@@ -7,9 +7,12 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import EditPostForm, { EditPostDTO } from "./EditPostForm";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { PostStatus } from "@prisma/client";
 
 function EditPostScreen() {
   const editPost = trpc.posts.editPost.useMutation();
+  const publishPost = trpc.posts.publishPost.useMutation();
+
   const router = useRouter();
   const {
     data: post,
@@ -20,6 +23,24 @@ function EditPostScreen() {
     { enabled: !!router.query.id }
   );
 
+  const handlePublishPost = () => {
+    publishPost.mutate(
+      { id: post?.id as string },
+      {
+        onSuccess: () => {
+          toast.success(
+            post?.status == PostStatus.Published
+              ? "Sucessfully unpublished post"
+              : "Sucessfully published post"
+          );
+          refetch();
+        },
+        onError: () => {
+          toast.success("Could not publish the post for some reason");
+        },
+      }
+    );
+  };
   const onSubmit = (data: EditPostDTO) => {
     editPost.mutate(
       { id: post?.id as string, ...data },
@@ -41,7 +62,9 @@ function EditPostScreen() {
         {!isLoading ? (
           <EditPostForm
             onSubmit={onSubmit}
-            isLoading={editPost.isLoading}
+            isUpdatingPost={editPost.isLoading}
+            isPublishingPost={publishPost.isLoading}
+            handlePublishPost={handlePublishPost}
             post={post}
           />
         ) : (

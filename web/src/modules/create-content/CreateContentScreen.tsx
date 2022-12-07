@@ -11,7 +11,6 @@ import { trpc } from "../../utils/trpc";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { MediaAsset } from "../../hooks/useUpload";
-import SelectInput from "../../components/common/SelectInput";
 
 const schema = z.object({
   title: z
@@ -42,7 +41,6 @@ function CreateContentScreen() {
     handleSubmit,
     control,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm<CreatePostDTO>({
     resolver: zodResolver(schema),
