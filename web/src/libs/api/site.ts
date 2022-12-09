@@ -1,3 +1,4 @@
+import { PostStatus } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import z from "zod";
 
@@ -15,6 +16,15 @@ export async function getSite(req: NextApiRequest, res: NextApiResponse) {
     const site = await prisma?.site.findFirst({
       where: {
         domain: siteId as string,
+        AND: {
+          user: {
+            posts: {
+              some: {
+                status: PostStatus.Published,
+              },
+            },
+          },
+        },
       },
       select: {
         description: true,
@@ -32,12 +42,15 @@ export async function getSite(req: NextApiRequest, res: NextApiResponse) {
                 subtitle: true,
                 title: true,
                 id: true,
+                status: true,
               },
             },
           },
         },
       },
     });
+    console.log(site?.user?.posts);
+
     if (!site) {
       return res.status(404).json({ message: "Site not found" });
     }

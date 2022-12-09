@@ -5,6 +5,7 @@ import classNames from "../../utils/classnames";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
+import Link from "next/link";
 const sidebarLinks = [
   {
     text: "Back to dashboard",
@@ -20,7 +21,7 @@ type Props = {
 };
 
 function SiteNavbar({ user }: Props) {
-  const { pathname } = useRouter();
+  const { pathname, query } = useRouter();
 
   return (
     <Disclosure as="nav" className="border border-b-black bg-white">
@@ -49,16 +50,20 @@ function SiteNavbar({ user }: Props) {
                 <div className="text-md  ml-3 flex cursor-pointer flex-row  items-center gap-2 px-2 py-2 font-medium text-gray-700 md:m-0 lg:m-0">
                   {user?.image && (
                     <>
-                      <Image
-                        src={user.image as string}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                        alt="User Avatar"
-                      />
-                      <span className="font-medium text-gray-800">
-                        {user.name}
-                      </span>
+                      <Link href={`/s/${query.siteId}`}>
+                        <div className="flex flex-row items-center gap-2">
+                          <Image
+                            src={user.image as string}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                            alt="User Avatar"
+                          />
+                          <span className="font-medium text-gray-800">
+                            {user.name}
+                          </span>
+                        </div>
+                      </Link>
                     </>
                   )}
                 </div>

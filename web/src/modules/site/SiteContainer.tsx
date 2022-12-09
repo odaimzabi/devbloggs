@@ -1,6 +1,7 @@
 import { IconBrandFacebook, IconBrandLinkedin } from "@tabler/icons";
 import Head from "next/head";
 import React, { ReactElement } from "react";
+import { LinkButton } from "./LinkButton";
 
 type Props = {
   children: ReactElement[] | ReactElement;
@@ -9,26 +10,6 @@ type Props = {
   facebook: string;
   linkedin: string;
 };
-
-const SocialLinkButton = ({
-  link,
-  icon,
-  text,
-}: {
-  icon: ReactElement;
-  link: string;
-  text: string;
-}) => (
-  <a
-    className="w-34  flex flex-row items-center gap-4 rounded-md border border-gray-600 p-2"
-    href={link}
-    target="_blank"
-    rel="noreferrer"
-  >
-    {icon}
-    <span className="font-medium">{text}</span>
-  </a>
-);
 
 function SiteContainer({
   children,
@@ -51,14 +32,14 @@ function SiteContainer({
             </p>
             <div className="flex flex-row items-start gap-4 ">
               {facebook && (
-                <SocialLinkButton
+                <LinkButton
                   icon={<IconBrandFacebook />}
                   link={facebook}
                   text="Facebook"
                 />
               )}
               {linkedin && (
-                <SocialLinkButton
+                <LinkButton
                   icon={<IconBrandLinkedin />}
                   link={linkedin}
                   text="Linkedin"
