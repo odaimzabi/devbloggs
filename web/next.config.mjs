@@ -1,5 +1,4 @@
 // @ts-check
-import { env } from "./src/env/server.mjs";
 
 /**
  * Don't be scared of the generics here.
@@ -15,7 +14,11 @@ function defineNextConfig(config) {
 
 export default defineNextConfig({
   images: {
-    domains: ["lh3.googleusercontent.com", "images.unsplash.com"],
+    domains: [
+      "lh3.googleusercontent.com",
+      "images.unsplash.com",
+      "d2fbzayhm7lemm.cloudfront.net",
+    ],
   },
   reactStrictMode: true,
   swcMinify: true,

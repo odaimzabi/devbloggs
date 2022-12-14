@@ -20,23 +20,6 @@ export const siteRouter = router({
       },
     });
 
-    if (!site) {
-      const newSite = await ctx.prisma.site.create({
-        data: {
-          domain: ctx.session.user.name
-            ?.toLowerCase()
-            .split(" ")
-            .join("") as string,
-          description: "Simple description for my blog site",
-          user: {
-            connect: {
-              id: ctx.session.user.id,
-            },
-          },
-        },
-      });
-      return newSite;
-    }
     return site;
   }),
   updateSite: protectedProcedure

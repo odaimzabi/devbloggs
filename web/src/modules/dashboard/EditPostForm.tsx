@@ -4,7 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { MediaAsset } from "../../hooks/useUpload";
 import MediaUpload from "../../components/common/MediaUpload";
-import SelectInput from "../../components/common/SelectInput";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import { Post, PostStatus } from "@prisma/client";
@@ -107,7 +106,6 @@ function EditPostForm({
               {errors.subtitle.message as string}
             </div>
           )}
-          <SelectInput />
           <label className="text-base font-medium text-gray-700">
             Post Description
           </label>
@@ -140,11 +138,10 @@ function EditPostForm({
             </div>
           )}
 
-          <div className="mt-2 flex flex-row items-center gap-4">
+          <div className="mt-2  hidden flex-row items-center gap-4 md:flex lg:flex">
             <Button
               type="submit"
               text="Edit Post"
-              className="hidden md:block lg:block"
               data-testid="createPost_btn"
               disabled={isUpdatingPost}
               isLoading={isUpdatingPost}

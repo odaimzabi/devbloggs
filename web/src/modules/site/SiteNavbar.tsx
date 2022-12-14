@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
 import Link from "next/link";
+import { UserImage } from "./UserImage";
+import { DashboardButton } from "./DashboardButton";
 const sidebarLinks = [
   {
     text: "Back to dashboard",
@@ -13,14 +15,14 @@ const sidebarLinks = [
   },
 ];
 
-type Props = {
+export type NavbarProps = {
   user: {
     image: string | null;
     name: string | null;
   } | null;
 };
 
-function SiteNavbar({ user }: Props) {
+function SiteNavbar({ user }: NavbarProps) {
   const { pathname, query } = useRouter();
 
   return (
@@ -50,28 +52,17 @@ function SiteNavbar({ user }: Props) {
                 <div className="text-md  ml-3 flex cursor-pointer flex-row  items-center gap-2 px-2 py-2 font-medium text-gray-700 md:m-0 lg:m-0">
                   {user?.image && (
                     <>
-                      <Link href={`/s/${query.siteId}`}>
-                        <div className="flex flex-row items-center gap-2">
-                          <Image
-                            src={user.image as string}
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                            alt="User Avatar"
-                          />
-                          <span className="font-medium text-gray-800">
-                            {user.name}
-                          </span>
-                        </div>
+                      <Link href={`/s/${query.siteId}`} passHref>
+                        <UserImage user={user} />
                       </Link>
                     </>
                   )}
                 </div>
               </div>
               <div className="hidden items-center gap-8  md:flex md:flex-row lg:flex lg:flex-row ">
-                <NextLink href="/dashboard">
-                  <IconHome className="cursor-pointer" />
-                </NextLink>
+                <Link href="/dashboard" passHref>
+                  <DashboardButton />
+                </Link>
               </div>
             </div>
           </div>

@@ -27,10 +27,6 @@ const sidebarLinks = [
     text: "Site Preferences",
     link: "/site-preferences",
   },
-  {
-    icon: <IconChartArea />,
-    text: "Statistics",
-  },
 ];
 const UserSkeleton = () => (
   <div className="mr-auto flex animate-pulse items-center">

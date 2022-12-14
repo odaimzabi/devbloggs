@@ -1,9 +1,10 @@
 import { router, protectedProcedure } from "../trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { getPresignedUrl } from "../../../libs/aws";
+import { getPresignedUrl } from "../../../libs/aws/getPresignedUrl";
 import { nanoid } from "nanoid";
-import { PostStatus } from "@prisma/client";
+import { Post, PostStatus } from "@prisma/client";
+import { getCloudFrontUrl } from "../../../libs/aws/getCloudfrontUrl";
 
 export const postsRouter = router({
   createPresignedUrl: protectedProcedure
@@ -73,14 +74,14 @@ export const postsRouter = router({
           code: "NOT_FOUND",
         });
       }
-      const updatedPost = await ctx.prisma.post.update({
+      const updatedPost = (await ctx.prisma.post.update({
         data: {
           ...input,
         },
         where: {
           id: input.id,
         },
-      });
+      })) as Post;
       return updatedPost;
     }),
   publishPost: protectedProcedure
@@ -132,6 +133,11 @@ export const postsRouter = router({
         authorId: ctx.session.user.id,
       },
     });
-    return posts;
+    const modifiedResult = posts.map(async (post) => {
+      post.image = (await getCloudFrontUrl(post.image as string)) as string;
+      return post;
+    });
+    const promisedResult = Promise.all(modifiedResult);
+    return promisedResult;
   }),
 });

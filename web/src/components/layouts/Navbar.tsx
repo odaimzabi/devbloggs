@@ -19,9 +19,6 @@ const sidebarLinks = [
     text: "Site Preferences",
     link: "/site-preferences",
   },
-  {
-    text: "Statistics",
-  },
 ];
 
 function Navbar() {

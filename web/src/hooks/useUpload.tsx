@@ -35,7 +35,7 @@ export const useUpload = (
 
     const formData = new FormData();
     Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      formData.append(key, value);
     });
     try {
       await fetch(url, {

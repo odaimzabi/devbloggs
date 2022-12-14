@@ -17,10 +17,10 @@ export default SitePage;
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
 }) => {
-  const id = query.siteId;
+  const domain = query.siteId;
   try {
     const { data: site } = await axios.get<SiteData>(
-      `http://localhost:3000/api/site?siteId=${id}`
+      `http://localhost:3000/api/site?domain=${domain}`
     );
     if (!site.domain) {
       return {

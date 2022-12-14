@@ -10,9 +10,8 @@ type Props = {
   id: string;
 };
 
-function BlogPostCard({ title, subtitle, id }: Props) {
+function BlogPostCard({ title, subtitle, id, image }: Props) {
   const { query } = useRouter();
-  console.log(query);
   return (
     <div className="md:w-90 transform overflow-hidden rounded-lg shadow-lg transition duration-500 ease-in-out hover:shadow-2xl">
       <Image

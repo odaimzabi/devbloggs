@@ -1,33 +1,22 @@
-import Image from "next/image";
 import React from "react";
-import student from "../../assets/student.jpeg";
 import Link from "next/link";
-
-const CustomImage = React.forwardRef(() => (
-  <Image
-    width={400}
-    height={170}
-    className="cursor-pointer "
-    src={student}
-    alt="Post image"
-  />
-));
-
-CustomImage.displayName = "Image";
+import { ImageCard } from "./ImageCard";
 
 export const PostCard = ({
   subtitle,
   title,
   id,
+  image,
 }: {
   subtitle: string;
   title: string;
   id: string;
+  image: string;
 }) => {
   return (
     <div className="max-w-sm rounded-lg border border-gray-200 bg-white shadow-md ">
       <Link href={`dashboard/edit/${id}`}>
-        <CustomImage />
+        <ImageCard src={image} />
       </Link>
       <div className="flex flex-col gap-3 p-5">
         <Link href={`dashboard/edit/${id}`}>
