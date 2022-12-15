@@ -3,10 +3,11 @@ import {
   GetSecretValueCommand,
 } from "@aws-sdk/client-secrets-manager";
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
+import { addDays, startOfDay } from "date-fns";
 import { clientEnv } from "../../env/schema.mjs";
 
 const client = new SecretsManagerClient({
-  region: "eu-central-1",
+  region: clientEnv.NEXT_PUBLIC_AWS_REGION,
   credentials: {
     accessKeyId: clientEnv.NEXT_PUBLIC_AWS_CLIENT_ID as string,
     secretAccessKey: clientEnv.NEXT_PUBLIC_AWS_CLIENT_SECRET as string,
@@ -17,7 +18,7 @@ export const getPrivateKey = async () => {
   try {
     const response = await client.send(
       new GetSecretValueCommand({
-        SecretId: "AWS_CDN_PK",
+        SecretId: clientEnv.NEXT_PUBLIC_CDN_SECRET,
         VersionStage: "AWSCURRENT",
       })
     );
@@ -37,7 +38,7 @@ export const getCloudFrontUrl = async (key: string) => {
     const signedUrl = getSignedUrl({
       url: `${clientEnv.NEXT_PUBLIC_AWS_CDN_URL}/${key}`,
       keyPairId: clientEnv.NEXT_PUBLIC_AWS_CDN_KP as string,
-      dateLessThan: "2023-01-01",
+      dateLessThan: addDays(startOfDay(new Date()), 2).toISOString(),
       privateKey: result as string,
     });
     return signedUrl;

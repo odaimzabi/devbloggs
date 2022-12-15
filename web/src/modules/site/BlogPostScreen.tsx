@@ -10,6 +10,7 @@ type Props = {
 };
 
 function BlogPostScreen({ data }: Props) {
+  console.log(data);
   return (
     <>
       <Head>
@@ -22,9 +23,8 @@ function BlogPostScreen({ data }: Props) {
         <div className="mt-3 flex items-center justify-center">
           <div className="flex max-w-xs flex-col items-center gap-8 rounded-md border border-black bg-white p-3 sm:max-w-sm md:max-w-2xl lg:max-w-2xl">
             <video
-              src={
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-              }
+              src={data.post.video as string}
+              poster={data.post.image as string}
               muted
               controls
             />

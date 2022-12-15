@@ -89,17 +89,17 @@ export const postsRouter = router({
       z.object({ id: z.string({ required_error: "ID is required" }).cuid() })
     )
     .mutation(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.findFirst({
+      const post = (await ctx.prisma.post.findFirst({
         where: {
           id: input.id,
         },
-      });
+      })) as Post;
       if (!post) {
         return new TRPCError({
           code: "NOT_FOUND",
         });
       }
-      const publishedPost = await ctx.prisma.post.update({
+      const publishedPost = (await ctx.prisma.post.update({
         where: {
           id: input.id,
         },
@@ -109,7 +109,7 @@ export const postsRouter = router({
               ? PostStatus.Draft
               : PostStatus.Published,
         },
-      });
+      })) as Post;
       return publishedPost;
     }),
   getPost: protectedProcedure
@@ -128,6 +128,7 @@ export const postsRouter = router({
         image: true,
         title: true,
         subtitle: true,
+        status: true,
       },
       where: {
         authorId: ctx.session.user.id,

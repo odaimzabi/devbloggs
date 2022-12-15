@@ -31,6 +31,8 @@ export const clientSchema = z.object({
   NEXT_PUBLIC_AWS_BUCKET: z.string(),
   NEXT_PUBLIC_AWS_CDN_URL: z.string(),
   NEXT_PUBLIC_AWS_CDN_KP: z.string(),
+  NEXT_PUBLIC_CDN_SECRET: z.string(),
+  NEXT_PUBLIC_AWS_REGION: z.string(),
 });
 
 /**
@@ -45,4 +47,6 @@ export const clientEnv = {
   NEXT_PUBLIC_AWS_BUCKET: process.env.NEXT_PUBLIC_AWS_BUCKET,
   NEXT_PUBLIC_AWS_CDN_URL: process.env.NEXT_PUBLIC_AWS_CDN_URL,
   NEXT_PUBLIC_AWS_CDN_KP: process.env.NEXT_PUBLIC_AWS_CDN_KP,
+  NEXT_PUBLIC_CDN_SECRET: process.env.NEXT_PUBLIC_CDN_SECRET,
+  NEXT_PUBLIC_AWS_REGION: process.env.NEXT_PUBLIC_AWS_REGION,
 };

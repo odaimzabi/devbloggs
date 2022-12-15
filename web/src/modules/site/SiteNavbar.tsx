@@ -3,11 +3,9 @@ import { Disclosure } from "@headlessui/react";
 import { IconHome, IconMenu2, IconX } from "@tabler/icons";
 import classNames from "../../utils/classnames";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import NextLink from "next/link";
 import Link from "next/link";
-import { UserImage } from "./UserImage";
-import { DashboardButton } from "./DashboardButton";
+import Image from "next/image";
 const sidebarLinks = [
   {
     text: "Back to dashboard",
@@ -53,7 +51,18 @@ function SiteNavbar({ user }: NavbarProps) {
                   {user?.image && (
                     <>
                       <Link href={`/s/${query.siteId}`} passHref>
-                        <UserImage user={user} />
+                        <a className="flex flex-row items-center gap-2">
+                          <Image
+                            src={user?.image as string}
+                            width={40}
+                            height={40}
+                            className="rounded-full"
+                            alt="User Avatar"
+                          />
+                          <span className="font-medium text-gray-800">
+                            {user?.name}
+                          </span>
+                        </a>
                       </Link>
                     </>
                   )}
@@ -61,7 +70,11 @@ function SiteNavbar({ user }: NavbarProps) {
               </div>
               <div className="hidden items-center gap-8  md:flex md:flex-row lg:flex lg:flex-row ">
                 <Link href="/dashboard" passHref>
-                  <DashboardButton />
+                  <a className="flex cursor-pointer flex-row items-center gap-2 rounded-md border border-black p-2">
+                    <IconHome className="cursor-pointer" />
+
+                    <span className="font-medium text-gray-800">Dashboard</span>
+                  </a>
                 </Link>
               </div>
             </div>

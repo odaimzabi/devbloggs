@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 const Feature = ({
   title,
   description,
@@ -13,17 +12,19 @@ const Feature = ({
 }) => (
   <>
     <div
-      className={`mt-4 flex flex-col items-center justify-center ${
+      className={`mt-4 flex flex-col items-center justify-center gap-2 ${
         reversed
           ? "md:flex-row-reverse lg:flex-row-reverse"
           : "md:flex-row lg:flex-row"
       }`}
     >
-      <div className="w-full text-center sm:px-6">
+      <div className="flex flex-col items-center justify-center text-center sm:px-6">
         <h3 className="text-3xl font-semibold text-gray-900">{title}</h3>
-        <p className="mt-6 text-xl leading-9 text-gray-400">{description}</p>
+        <p className="mt-6  text-center text-xl leading-9 text-gray-400">
+          {description}
+        </p>
       </div>
-      <div className="w-full p-6 ">
+      <div className="md:w-1/2">
         <img src={img} alt="Feature" />
       </div>
     </div>
@@ -39,10 +40,10 @@ const features = [
     reversed: false,
   },
   {
-    title: "Earn money from your blog posts",
+    title: "A custom website for you",
     description:
-      "You can start earning money on your own blog posts using a built in subscription option in your personal site",
-    img: "/feature2.webp",
+      "All of your published posts will be available in your custom site!",
+    img: "/feature2.svg",
     reversed: true,
   },
   {

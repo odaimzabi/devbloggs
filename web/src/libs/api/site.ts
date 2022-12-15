@@ -36,7 +36,12 @@ export async function getSite(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
+    const postsPromises = site?.user?.posts.map(async (post) => {
+      post.image = (await getCloudFrontUrl(post.image as string)) as string;
+      return post;
+    });
 
+    site!.user!.posts = await Promise.all(postsPromises as unknown as Post[]);
     if (!site) {
       return res.status(404).json({ message: "Site not found" });
     }
@@ -83,6 +88,7 @@ export async function getBlogPost(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
+
     if (!site) {
       return res.status(404).json({ message: "Site not found" });
     }
@@ -91,6 +97,8 @@ export async function getBlogPost(req: NextApiRequest, res: NextApiResponse) {
         id: id as string,
       },
     });
+    post!.image = (await getCloudFrontUrl(post?.image as string)) as string;
+    post!.video = (await getCloudFrontUrl(post?.video as string)) as string;
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
