@@ -83,7 +83,10 @@ function SideBar() {
               className="rounded-full"
               alt="User Avatar"
             />
-            <span className="font-semibold text-gray-500">
+            <span
+              className="font-semibold text-gray-500"
+              data-testid="username"
+            >
               {sessionData.user.name}
             </span>
           </>
@@ -95,13 +98,17 @@ function SideBar() {
       </div>
 
       <hr />
-      <button
-        className="text-md mt-auto mb-2 flex cursor-pointer  flex-row items-center gap-2 px-4 py-4 font-semibold text-gray-500 hover:bg-gray-50"
-        onClick={() => signOut()}
-      >
-        <IconLogout />
-        <span>Logout</span>
-      </button>
+      {sessionData?.user ? (
+        <button
+          className="text-md mt-auto mb-2 flex cursor-pointer  flex-row items-center gap-2 px-4 py-4 font-semibold text-gray-500 hover:bg-gray-50"
+          onClick={() => signOut()}
+        >
+          <IconLogout />
+          <span>Logout</span>
+        </button>
+      ) : (
+        <></>
+      )}
     </aside>
   );
 }

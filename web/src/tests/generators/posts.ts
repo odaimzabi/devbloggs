@@ -8,6 +8,10 @@ export const postGenerator = () => {
     title: faker.lorem.sentence(3),
     subtitle: faker.lorem.sentence(3),
     image: faker.image.abstract(),
+    video: faker.image.abstract(),
+    github_repo: "",
+    authorId: faker.datatype.uuid(),
+    description: faker.lorem.paragraph(),
     status: PostStatus.Draft,
   };
 };

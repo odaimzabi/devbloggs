@@ -36,7 +36,10 @@ function Navbar() {
             <div className="flex h-16 items-center lg:justify-between">
               <div className="-mr-2 flex md:hidden">
                 {/* Mobile menu button */}
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md  p-2 text-gray-400  hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                <Disclosure.Button
+                  data-testid="menu-btn"
+                  className="inline-flex items-center justify-center rounded-md  p-2 text-gray-400  hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300"
+                >
                   <span className="sr-only">Open main menu</span>
                   {open ? (
                     <IconX

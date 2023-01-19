@@ -23,6 +23,7 @@ const config: Config.InitialOptions = {
   },
   transformIgnorePatterns: [
     "/node_modules/",
+    "/node_modules/next-auth",
     "^.+\\.module\\.(css|sass|scss)$",
   ],
   testEnvironment: "jsdom",

@@ -21,7 +21,7 @@ const schema = z.object({
     .string({ required_error: "Post title is required" })
     .min(10, { message: "Must be 10 or more characters long" }),
   subtitle: z
-    .string({ required_error: "Post title is required" })
+    .string({ required_error: "Post subtitle is required" })
     .min(10, { message: "Must be 10 or more characters long" }),
   description: z
     .string({ required_error: "Post description is required" })
@@ -78,10 +78,16 @@ function EditPostForm({
 
           <Controller
             name="title"
+            data-testid="post_title"
             control={control}
             defaultValue={post?.title}
             render={({ field }) => (
-              <Input type="text" data-testid="post_title" {...field} />
+              <Input
+                type="text"
+                dataTestid="post_title"
+                {...field}
+                ariaInvalid={errors.title?.message ? "true" : "false"}
+              />
             )}
           />
           {errors.title && (
@@ -98,7 +104,12 @@ function EditPostForm({
             control={control}
             defaultValue={post?.subtitle}
             render={({ field }) => (
-              <Input type="text" data-testid="post_subtitle" {...field} />
+              <Input
+                type="text"
+                dataTestid="post_subtitle"
+                {...field}
+                ariaInvalid={errors.subtitle?.message ? "true" : "false"}
+              />
             )}
           />
           {errors.subtitle && (
@@ -114,6 +125,7 @@ function EditPostForm({
             defaultValue={post?.description}
             className="h-32 rounded-md border border-gray-300 p-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             data-testid="post_description"
+            aria-invalid={errors.subtitle?.message ? "true" : "false"}
           />
           {errors.description && (
             <div className="text-red-500" data-testid="error">
@@ -129,7 +141,12 @@ function EditPostForm({
             control={control}
             defaultValue={post?.github_repo ? post?.github_repo : ""}
             render={({ field }) => (
-              <Input type="text" {...field} data-testid="github_repo" />
+              <Input
+                type="text"
+                {...field}
+                dataTestid="github_repo"
+                ariaInvalid={errors.github_repo?.message ? "true" : "false"}
+              />
             )}
           />
           {errors.github_repo && (
@@ -142,7 +159,6 @@ function EditPostForm({
             <Button
               type="submit"
               text="Edit Post"
-              data-testid="createPost_btn"
               disabled={isUpdatingPost}
               isLoading={isUpdatingPost}
             />
@@ -154,7 +170,6 @@ function EditPostForm({
                   : "Publish Post"
               }
               className="bg-green-600 hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-              data-testid="createPost_btn"
               disabled={isPublishingPost}
               isLoading={isPublishingPost}
               onClick={() => handlePublishPost()}
@@ -177,7 +192,6 @@ function EditPostForm({
           <Button
             type="submit"
             text="Edit Post"
-            className=""
             data-testid="createPost_btn"
             disabled={isPublishingPost}
             isLoading={isPublishingPost}
@@ -190,7 +204,6 @@ function EditPostForm({
                 : "Publish Post"
             }
             className="bg-green-600 hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-            data-testid="createPost_btn"
             disabled={isUpdatingPost}
             isLoading={isUpdatingPost}
             onClick={() => handlePublishPost()}

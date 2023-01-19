@@ -6,7 +6,6 @@ import NextNProgress from "nextjs-progressbar";
 import { AppProps } from "../../pages/_app";
 
 type Props = {
-  /** pageProps from pages/_app.tsx */
   pageProps: AppProps["pageProps"];
   children: ReactNode;
 };

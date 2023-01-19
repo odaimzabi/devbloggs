@@ -11,9 +11,10 @@ export * from "@testing-library/react";
 export { default as userEvent } from "@testing-library/user-event";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { CustomAppProps } from "../../pages/_app";
-
+import { Session } from "next-auth";
+import fetch from "cross-fetch";
 export const trpcRequest = createTRPCReact<AppRouter>();
-
+globalThis.fetch = fetch;
 export function render(
   ui: RenderUI,
   { router = {}, ...options }: RenderOptions = {}
@@ -72,4 +73,7 @@ export const mockRouter: NextRouter = {
 
 export type DefaultParams = Parameters<typeof defaultRender>;
 export type RenderUI = DefaultParams[0];
-export type RenderOptions = DefaultParams[1] & { router?: Partial<NextRouter> };
+export type RenderOptions = DefaultParams[1] & {
+  router?: Partial<NextRouter>;
+  session?: Session | null;
+};

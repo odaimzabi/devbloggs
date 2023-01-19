@@ -13,7 +13,7 @@ function Container({ children, title }: Props) {
         <title>{`${title} | Devblog`}</title>
       </Head>
 
-      <div className="align-center flex h-screen w-full flex-col gap-2 py-20 px-10">
+      <div className="align-center flex w-full flex-col gap-2 py-20 px-10">
         <h2 className="text-2xl font-bold">{title}</h2>
 
         {children}
