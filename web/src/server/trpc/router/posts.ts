@@ -121,4 +121,45 @@ export const postsRouter = router({
         },
       });
     }),
+  getPosts: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+        authorId: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const { authorId, cursor, limit } = input;
+      const posts = await ctx.prisma?.post.findMany({
+        select: {
+          id: true,
+          image: true,
+          title: true,
+          subtitle: true,
+          status: true,
+        },
+        take: limit! + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        where: {
+          authorId: authorId as string,
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      console.log(posts.length > limit!, limit, posts.length, cursor);
+      if (posts.length > limit!) {
+        const nextItem = posts.pop(); // return the last item from the array
+        nextCursor = nextItem?.id;
+      }
+      const modifiedResult = posts!.map(async (post) => {
+        post.image = (await getCloudFrontUrl(post.image as string)) as string;
+        return post;
+      });
+      const promisedResult = await Promise.all(modifiedResult);
+      console.log("here i reached");
+      return {
+        posts: promisedResult,
+        nextCursor,
+      };
+    }),
 });

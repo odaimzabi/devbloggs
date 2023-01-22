@@ -10,7 +10,6 @@ type Props = {
 };
 
 function BlogPostScreen({ data }: Props) {
-  console.log(data);
   return (
     <>
       <Head>

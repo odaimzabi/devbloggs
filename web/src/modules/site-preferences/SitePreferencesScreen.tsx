@@ -9,7 +9,6 @@ import EditSiteForm, { SitePreferencesDTO } from "./EditSiteForm";
 export default function SitePreferencesScreen() {
   const editSite = trpc.site.updateSite.useMutation();
   const { data: site, refetch, isLoading } = trpc.site.getSite.useQuery();
-
   const onSubmit = (data: SitePreferencesDTO) => {
     editSite.mutate(
       { id: site?.id as string, ...data },

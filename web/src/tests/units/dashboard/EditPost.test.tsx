@@ -5,7 +5,6 @@ import EditPostForm from "../../../modules/dashboard/EditPostForm";
 import EditPostScreen from "../../../modules/dashboard/EditPostScreen";
 import { postGenerator } from "../../generators/posts";
 import { fireEvent, render, screen, waitFor } from "../../utils";
-
 jest.mock("next-auth/react", () => {
   const originalModule = jest.requireActual("next-auth/react");
   const mockSession = {
@@ -20,7 +19,7 @@ jest.mock("next-auth/react", () => {
     __esModule: true,
     ...originalModule,
     useSession: jest.fn(() => {
-      return { data: mockSession, status: "authenticated" }; // return type is [] in v3 but changed to {} in v4
+      return { data: mockSession, status: "authenticated" };
     }),
   };
 });
@@ -52,7 +51,6 @@ describe("Edit post screen", () => {
     const post_description = await findByTestId("post_description");
     const github_repo = await findByTestId("github_repo");
     const submit_button = await findByTestId("createPost_btn");
-
     await waitFor(() => fireEvent.submit(submit_button));
 
     expect(post_title).toHaveAttribute("aria-invalid", "false");

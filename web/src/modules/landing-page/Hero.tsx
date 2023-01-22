@@ -1,5 +1,6 @@
 import React from "react";
 import LPNavbar from "./LPNavbar";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -41,18 +42,19 @@ export default function Hero() {
                   Welcome to Devbloggs
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
-                  A site where you post creative blog posts for your followers.
+                  Create your own blog site easily on our platform. with amazing
+                  features like custom domain name and unlimited posts. Connect
+                  with your followers like never before.
                 </p>
                 <div className="mt-8 flex gap-x-4 sm:justify-center">
-                  <a
-                    href="#"
-                    className="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700"
-                  >
-                    Get started{" "}
-                    <span className="text-indigo-200" aria-hidden="true">
-                      &rarr;
-                    </span>
-                  </a>
+                  <Link href="/login" passHref>
+                    <a className="inline-block rounded-lg bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-700 hover:ring-indigo-700">
+                      Get started
+                      <span className="text-indigo-200" aria-hidden="true">
+                        &rarr;
+                      </span>
+                    </a>
+                  </Link>
                 </div>
               </div>
               <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">

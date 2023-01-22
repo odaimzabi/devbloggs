@@ -16,10 +16,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   query,
 }) => {
   try {
-    const { data: data } = await apiClient.post(`api/site`, {
+    const { data: data } = await apiClient.post(`/site`, {
       siteId: query.siteId,
       id: query.id,
     });
+    console.log(data);
     if (!data) {
       return {
         notFound: true,

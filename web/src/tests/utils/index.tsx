@@ -13,6 +13,8 @@ import { RouterContext } from "next/dist/shared/lib/router-context";
 import { CustomAppProps } from "../../pages/_app";
 import { Session } from "next-auth";
 import fetch from "cross-fetch";
+import { Toaster } from "react-hot-toast";
+
 export const trpcRequest = createTRPCReact<AppRouter>();
 globalThis.fetch = fetch;
 export function render(
@@ -38,6 +40,7 @@ export function render(
         <RouterContext.Provider value={{ ...mockRouter, ...router }}>
           <trpcRequest.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
+              <Toaster position="bottom-right" />
               <AppProvider pageProps={pageProps}>{children}</AppProvider>
             </QueryClientProvider>
           </trpcRequest.Provider>

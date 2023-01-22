@@ -21,7 +21,7 @@ function LPNavbar() {
           </div>
 
           <div className="lg:flex lg:min-w-0 lg:flex-1 lg:justify-end">
-            <Link href={"/auth/login"} passHref>
+            <Link href={"/login"} passHref>
               <a className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                 Log in
               </a>
@@ -41,7 +41,7 @@ function LPNavbar() {
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="py-6">
-                  <Link href={"/auth/login"} passHref>
+                  <Link href={"/login"} passHref>
                     <a className="inline-block rounded-lg px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                       Log in
                     </a>

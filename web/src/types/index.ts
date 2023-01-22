@@ -1,5 +1,8 @@
 import { Post, PostStatus } from "@prisma/client";
 
+//TODO refactor site type
+//TODO refactor this file
+
 export type SiteDetails = {
   user: {
     image: string | null;

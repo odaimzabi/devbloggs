@@ -10,6 +10,7 @@ export const ImageCard = React.forwardRef(({ src }: { src: string }, _ref) => (
     src={src ? src : defaultImage}
     alt="Post image"
     placeholder="blur"
+    loading="eager"
     blurDataURL={src}
   />
 ));

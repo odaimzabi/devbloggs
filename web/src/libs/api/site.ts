@@ -56,6 +56,8 @@ export async function getBlogPost(req: NextApiRequest, res: NextApiResponse) {
   try {
     queryParams.parse(req.body);
   } catch {
+    console.log("invalid queries");
+
     return res.status(400).end("Invalid query parameters");
   }
 
@@ -90,6 +92,8 @@ export async function getBlogPost(req: NextApiRequest, res: NextApiResponse) {
     });
 
     if (!site) {
+      console.log("site not found");
+
       return res.status(404).json({ message: "Site not found" });
     }
     const post = await prisma?.post.findFirst({
@@ -105,6 +109,7 @@ export async function getBlogPost(req: NextApiRequest, res: NextApiResponse) {
     }
     return res.status(201).send({ post, site });
   } catch {
+    console.log("hello here");
     return res.status(500).send({ message: "Something bad happened" });
   }
 }

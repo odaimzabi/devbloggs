@@ -20,14 +20,25 @@ export async function getDashboardData(
       subtitle: true,
       status: true,
     },
+    take: 3,
+    cursor: undefined,
     where: {
       authorId: req.query.authorId as string,
     },
   });
+  let nextCursor: string | undefined = undefined;
+  if (posts!.length > 3) {
+    const nextItem = posts!.pop(); // return the last item from the array
+    nextCursor = nextItem?.id;
+  }
   const modifiedResult = posts!.map(async (post) => {
     post.image = (await getCloudFrontUrl(post.image as string)) as string;
     return post;
   });
   const promisedResult = await Promise.all(modifiedResult);
-  return res.status(200).send({ posts: promisedResult });
+  console.log("here i reached 2");
+  return res.status(200).send({
+    posts: promisedResult,
+    nextCursor,
+  });
 }
