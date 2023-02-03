@@ -3,13 +3,7 @@
  */
 import DashboardScreen from "../../../modules/dashboard/DashboardScreen";
 import { DashboardData } from "../../../types";
-import {
-  fireEvent,
-  mockRouter,
-  render,
-  screen,
-  trpcRequest,
-} from "../../utils";
+import { fireEvent, mockRouter, render, screen } from "../../utils";
 import { postsGenerator } from "../../generators/posts";
 
 jest.mock("next-auth/react", () => {
@@ -31,26 +25,57 @@ jest.mock("next-auth/react", () => {
   };
 });
 
+const goNextPage = jest.fn();
+const goPrevPage = jest.fn();
+
 describe("Dashboard screen", () => {
   it("should load with no errors", () => {
     const posts: DashboardData = { posts: [] };
-    expect(() => render(<DashboardScreen posts={posts} />)).not.toThrowError();
+    expect(() =>
+      render(
+        <DashboardScreen
+          posts={posts}
+          goNextPage={goNextPage}
+          goPrevPage={goPrevPage}
+        />
+      )
+    ).not.toThrowError();
   });
   it("should show username of authenticated user", async () => {
     const data = postsGenerator();
-    render(<DashboardScreen posts={data} />);
+    render(
+      <DashboardScreen
+        posts={data}
+        goNextPage={goNextPage}
+        goPrevPage={goPrevPage}
+      />
+    );
 
     expect(screen.getByText("test")).toBeInTheDocument();
   });
 
   it("should load with no errors if posts are passed", async () => {
     const data = postsGenerator();
-    expect(() => render(<DashboardScreen posts={data} />)).not.toThrowError();
+    expect(() =>
+      render(
+        <DashboardScreen
+          posts={data}
+          goNextPage={goNextPage}
+          goPrevPage={goPrevPage}
+        />
+      )
+    ).not.toThrowError();
   });
 
   it("should redirect to edit post screen if user clicked on post title", async () => {
     const data = postsGenerator(1);
-    const { getByTestId } = render(<DashboardScreen posts={data} />);
+    const { getByTestId } = render(
+      <DashboardScreen
+        posts={data}
+        goNextPage={goNextPage}
+        goPrevPage={goPrevPage}
+      />
+    );
     const postTitle = getByTestId("post-link");
     fireEvent.click(postTitle);
 
@@ -59,7 +84,13 @@ describe("Dashboard screen", () => {
 
   it("should display the pagination buttons", async () => {
     const data = postsGenerator();
-    const { findAllByLabelText } = render(<DashboardScreen posts={data} />);
+    const { findAllByLabelText } = render(
+      <DashboardScreen
+        posts={data}
+        goNextPage={goNextPage}
+        goPrevPage={goPrevPage}
+      />
+    );
     const paginationButtons = await findAllByLabelText("pagination");
     expect(paginationButtons.length).toBe(2);
   });

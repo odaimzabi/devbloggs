@@ -8,9 +8,15 @@ import Pagination from "./Pagination";
 
 type Props = {
   posts: DashboardData | undefined;
+  goNextPage: () => void;
+  goPrevPage: () => void;
 };
 
-export default function DashboardScreen({ posts }: Props) {
+export default function DashboardScreen({
+  posts,
+  goNextPage,
+  goPrevPage,
+}: Props) {
   const { data: userData } = useSession();
   return (
     <Layout>
@@ -22,7 +28,8 @@ export default function DashboardScreen({ posts }: Props) {
         </div>
 
         <PostsContainer posts={posts && posts!.posts} />
-        <Pagination />
+
+        <Pagination goNextPage={goNextPage} goPrevPage={goPrevPage} />
       </Container>
     </Layout>
   );

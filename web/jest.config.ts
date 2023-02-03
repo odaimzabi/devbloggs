@@ -1,4 +1,3 @@
-import { compilerOptions } from "./tsconfig.json";
 import type { Config } from "@jest/types";
 
 /**

@@ -1,9 +1,15 @@
 import React from "react";
 
-export default function Pagination() {
+type Props = {
+  goNextPage: () => void;
+  goPrevPage: () => void;
+};
+
+export default function Pagination({ goNextPage, goPrevPage }: Props) {
   return (
     <div className="mt-4 flex w-full flex-row items-center justify-center">
       <button
+        onClick={() => goPrevPage()}
         aria-label="pagination"
         className="mr-3 inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700  "
       >
@@ -23,6 +29,7 @@ export default function Pagination() {
         Previous
       </button>
       <button
+        onClick={() => goNextPage()}
         aria-label="pagination"
         className="inline-flex items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 "
       >

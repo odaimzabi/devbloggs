@@ -145,10 +145,13 @@ export const postsRouter = router({
           authorId: authorId as string,
         },
       });
-      let nextCursor: typeof cursor | undefined = undefined;
-      console.log(posts.length > limit!, limit, posts.length, cursor);
+      let nextCursor: typeof cursor | undefined;
+      let prevCursor: typeof cursor | undefined;
+      if (cursor) {
+        prevCursor = cursor;
+      }
       if (posts.length > limit!) {
-        const nextItem = posts.pop(); // return the last item from the array
+        const nextItem = posts.pop();
         nextCursor = nextItem?.id;
       }
       const modifiedResult = posts!.map(async (post) => {
@@ -156,10 +159,10 @@ export const postsRouter = router({
         return post;
       });
       const promisedResult = await Promise.all(modifiedResult);
-      console.log("here i reached");
       return {
         posts: promisedResult,
         nextCursor,
+        prevCursor,
       };
     }),
 });

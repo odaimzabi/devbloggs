@@ -45,7 +45,7 @@ model Session {
 
 model Post{
   id          String @id @default(cuid())
-  title       String 
+  title       String  
   subtitle    String 
   description String
   github_repo String?
@@ -84,8 +84,6 @@ enum PostStatus{
   Draft
   Published
 }
-
-
 
 model VerificationToken {
   identifier String
